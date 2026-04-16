@@ -9,11 +9,14 @@ import java.nio.charset.StandardCharsets;
 public class HelloRequestProcessor implements RequestProcessor {
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
+        String body = "<html><body><h1>Hello World!!!</h1></body></html>";
         String response = "" +
                 "HTTP/1.1 200 OK\r\n" +
                 "Content-Type: text/html\r\n" +
+                "Content-Length: "+body.length()+"\r\n" +
+                "Connection: close\r\n" +
                 "\r\n" +
-                "<html><body><h1>Hello World!!!</h1></body></html>";
+                body;
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }
 }

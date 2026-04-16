@@ -19,7 +19,9 @@ public class CreateItemRequestProcessor implements RequestProcessor {
         System.out.println(item);
         String response = "" +
                 "HTTP/1.1 201 Created\r\n" +
-                "Content-Type: application/json\r\n" +
+                "Content-Type: text/html\r\n" +
+                "Content-Length: " + 0 + "\r\n" +
+                "Connection: close\r\n" +
                 "\r\n";
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }

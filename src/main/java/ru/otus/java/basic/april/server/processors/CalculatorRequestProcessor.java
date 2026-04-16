@@ -11,12 +11,16 @@ public class CalculatorRequestProcessor implements RequestProcessor {
     public void execute(HttpRequest request, OutputStream output) throws IOException {
         int a = Integer.parseInt(request.getParameter("a"));
         int b = Integer.parseInt(request.getParameter("b"));
-        String result = a + " + " + b + " = " + (a + b);
+        String solution = a + " + " + b + " = " + (a + b);
+        String result =  "<html><body><h1>" + solution + "</h1></body></html>";
+
         String response = "" +
                 "HTTP/1.1 200 OK\r\n" +
                 "Content-Type: text/html\r\n" +
+                "Content-length: " + result.length() + "\r\n" +
+                "Connection: close\r\n" +
                 "\r\n" +
-                "<html><body><h1>" + result + "</h1></body></html>";
+                result;
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }
 }
