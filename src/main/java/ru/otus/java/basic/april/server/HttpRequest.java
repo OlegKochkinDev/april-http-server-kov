@@ -9,6 +9,11 @@ public class HttpRequest {
     private String uri;
     private Map<String, String> params;
     private String body;
+    private StandartResponses responses;
+
+    public HttpResponse getStandartResponse(int statusCode) {
+        return responses.get(statusCode).clear();
+    }
 
     public String getBody() {
         return body;
@@ -23,6 +28,8 @@ public class HttpRequest {
     }
 
     public HttpRequest(String rawRequest) {
+        System.out.println("Request new request");
+        this.responses = new StandartResponses();
         this.rawRequest = rawRequest;
         this.parse();
     }

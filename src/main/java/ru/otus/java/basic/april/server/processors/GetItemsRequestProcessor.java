@@ -2,6 +2,7 @@ package ru.otus.java.basic.april.server.processors;
 
 import com.google.gson.Gson;
 import ru.otus.java.basic.april.server.HttpRequest;
+import ru.otus.java.basic.april.server.HttpResponse;
 import ru.otus.java.basic.april.server.app.Item;
 
 import java.io.IOException;
@@ -21,13 +22,13 @@ public class GetItemsRequestProcessor implements RequestProcessor {
         ));
         Gson gson = new Gson();
         String result = gson.toJson(items);
-        String response = "" +
-                "HTTP/1.1 200 OK\r\n" +
-                "Content-Type: application/json\r\n" +
-                "Content-Length: " + result.length() + "\r\n" +
-                "Connection: close\r\n" +
-                "\r\n" +
-                result;
-        output.write(response.getBytes(StandardCharsets.UTF_8));
+
+
+        HttpResponse httpResponse = request.getStandartResponse(200);
+        httpResponse.addHeader("Content-Type", "application/json");
+        httpResponse.addHeader("Content-length", String.valueOf(result.length()));
+        httpResponse.addHeader("Connection", "close");
+        httpResponse.setBody(result);
+        httpResponse.send(output);
     }
 }

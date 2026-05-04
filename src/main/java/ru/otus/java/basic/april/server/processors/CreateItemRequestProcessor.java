@@ -2,6 +2,7 @@ package ru.otus.java.basic.april.server.processors;
 
 import com.google.gson.Gson;
 import ru.otus.java.basic.april.server.HttpRequest;
+import ru.otus.java.basic.april.server.HttpResponse;
 import ru.otus.java.basic.april.server.app.Item;
 
 import java.io.IOException;
@@ -14,15 +15,15 @@ import java.util.List;
 public class CreateItemRequestProcessor implements RequestProcessor {
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
+
+        int statusCode = 201;
         Gson gson = new Gson();
         Item item = gson.fromJson(request.getBody(), Item.class);
-        System.out.println(item);
-        String response = "" +
-                "HTTP/1.1 201 Created\r\n" +
-                "Content-Type: text/html\r\n" +
-                "Content-Length: " + 0 + "\r\n" +
-                "Connection: close\r\n" +
-                "\r\n";
-        output.write(response.getBytes(StandardCharsets.UTF_8));
+
+        HttpResponse httpResponse = request.getStandartResponse(statusCode);
+        httpResponse.addHeader("Content-Type", "text/html");
+        httpResponse.addHeader("Content-length", String.valueOf(0));
+        httpResponse.addHeader("Connection", "close");
+        httpResponse.send(output);
     }
 }
