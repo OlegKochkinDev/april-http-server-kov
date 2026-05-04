@@ -24,6 +24,8 @@ public class GetItemsRequestProcessor implements RequestProcessor {
         String response = "" +
                 "HTTP/1.1 200 OK\r\n" +
                 "Content-Type: application/json\r\n" +
+                "Content-Length: " + result.length() + "\r\n" +
+                "Connection: close\r\n" +
                 "\r\n" +
                 result;
         output.write(response.getBytes(StandardCharsets.UTF_8));

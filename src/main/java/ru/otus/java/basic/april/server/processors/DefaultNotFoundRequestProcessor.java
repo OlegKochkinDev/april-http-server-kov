@@ -9,11 +9,14 @@ import java.nio.charset.StandardCharsets;
 public class DefaultNotFoundRequestProcessor implements RequestProcessor {
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
+        String body = "<html><body><h1>404.. Page Not Found</h1></body></html>";
         String response = "" +
                 "HTTP/1.1 404 Not Found\r\n" +
                 "Content-Type: text/html\r\n" +
+                "Content-Length: " + body.length() + "\r\n" +
+                "Connection: close\r\n" +
                 "\r\n" +
-                "<html><body><h1>404.. Page Not Found</h1></body></html>";
+                body;
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }
 }
